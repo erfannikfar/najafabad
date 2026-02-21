@@ -8,6 +8,11 @@
       href="https://fonts.googleapis.com/css2?family=Vazir:wght@300;400;500;700&display=swap"
       rel="stylesheet"
     />
+    <!-- Font Awesome for Eitaa icon (using a simple SVG alternative if needed) -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
     <style>
       body {
         font-family: "Vazir", Tahoma, Arial, sans-serif;
@@ -80,6 +85,80 @@
       input::placeholder {
         color: #aaa;
       }
+
+      /* استایل کانتینر رادیو باتن‌های سفارشی */
+      .radio-group,
+      .payment-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 5px;
+      }
+
+      /* مخفی کردن رادیو باتن اصلی */
+      .radio-group input[type="radio"],
+      .payment-group input[type="radio"] {
+        position: absolute;
+        opacity: 0;
+        width: 0;
+        height: 0;
+        pointer-events: none;
+      }
+
+      /* استایل لیبل (باکس انتخاب) */
+      .radio-group label,
+      .payment-group label {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 20px;
+        background-color: #fff;
+        border: 2px solid #e1e5e9;
+        border-radius: 10px;
+        font-size: 15px;
+        font-weight: 500;
+        color: #555;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        margin-bottom: 0;
+        min-width: 70px;
+        text-align: center;
+        user-select: none;
+      }
+
+      /* حالت hover */
+      .radio-group label:hover,
+      .payment-group label:hover {
+        border-color: #a088c0;
+        background-color: #f9f5ff;
+      }
+
+      /* استایل برای گزینه انتخاب شده */
+      .radio-group input[type="radio"]:checked + label,
+      .payment-group input[type="radio"]:checked + label {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border-color: transparent;
+        box-shadow: 0 4px 10px rgba(102, 126, 234, 0.3);
+      }
+
+      /* استایل خطا برای اینپوت‌ها */
+      input.error {
+        border-color: #e74c3c;
+        background-color: #fff8f8;
+      }
+
+      .error-message {
+        color: #e74c3c;
+        font-size: 13px;
+        margin-top: 5px;
+        display: none;
+      }
+
+      .error-message.show {
+        display: block;
+      }
+
       button {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         color: white;
@@ -90,7 +169,7 @@
         width: 100%;
         font-size: 18px;
         font-weight: 500;
-        margin-top: 30px;
+        margin-top: 20px;
         transition:
           transform 0.2s ease,
           box-shadow 0.2s ease;
@@ -102,67 +181,254 @@
       button:active {
         transform: translateY(0);
       }
+      .info-message {
+        text-align: center;
+        color: #555;
+        font-size: 15px;
+        margin: 20px 0 10px;
+        background: #f0f4ff;
+        padding: 10px;
+        border-radius: 8px;
+        border-right: 4px solid #667eea;
+      }
+
+      /* استایل بنر ایتا */
+      .eitaa-banner {
+        margin-top: 30px;
+        background: linear-gradient(135deg, #27a4b0 0%, #1e7f8a 100%);
+        border-radius: 12px;
+        padding: 20px;
+        text-align: center;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+      }
+      .eitaa-banner:hover {
+        transform: translateY(-5px);
+      }
+      .eitaa-banner a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        color: white;
+        text-decoration: none;
+        font-size: 20px;
+        font-weight: 500;
+      }
+      .eitaa-banner i {
+        font-size: 36px;
+        color: white;
+      }
+      .eitaa-banner span {
+        border-bottom: 2px solid rgba(255, 255, 255, 0.5);
+        padding-bottom: 5px;
+      }
+
       .footer {
         text-align: center;
-        margin-top: 20px;
+        margin-top: 25px;
         color: #777;
         font-size: 14px;
+        border-top: 1px dashed #ddd;
+        padding-top: 15px;
+      }
+      .footer p {
+        margin: 5px 0;
+      }
+      .footer .credit {
+        color: #667eea;
+        font-weight: 500;
       }
     </style>
   </head>
   <body>
     <div class="form-container">
       <h2>فرم درخواست ملک</h2>
-      <form action="https://formspree.io/f/mvzbblor" method="POST">
+      <form id="propertyForm" action="https://formspree.io/f/mvzbblor" method="POST">
+        <!-- اطلاعات تماس -->
         <div class="form-group">
           <label for="name">نام و نام خانوادگی</label>
-          <input type="text" id="name" name="name" required />
+          <input
+            type="text"
+            id="name"
+            name="name"
+            placeholder="مثلاً علی رضایی"
+            required
+          />
         </div>
 
         <div class="form-group">
-          <label for="email">ایمیل</label>
-          <input type="email" id="email" name="email" required />
+          <label for="phone">شماره تماس</label>
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            placeholder="مثلاً 09123456789"
+            required
+          />
+          <div class="error-message" id="phoneError">
+            شماره موبایل باید با ۰۹ شروع شود و ۱۱ رقم باشد
+          </div>
         </div>
 
+        <!-- نوع ملک (رادیو باتن سفارشی) -->
         <div class="form-group">
-          <label for="phone">تلفن تماس</label>
-          <input type="tel" id="phone" name="phone" required />
+          <label>نوع ملک درخواستی</label>
+          <div class="radio-group">
+            <input type="radio" name="property-type" id="prop1" value="زمین" required />
+            <label for="prop1">زمین</label>
+
+            <input type="radio" name="property-type" id="prop2" value="نوساز" />
+            <label for="prop2">نوساز</label>
+
+            <input type="radio" name="property-type" id="prop3" value="باغ ویلا" />
+            <label for="prop3">باغ ویلا</label>
+
+            <input type="radio" name="property-type" id="prop4" value="آهن اجر" />
+            <label for="prop4">آهن اجر</label>
+
+            <input type="radio" name="property-type" id="prop5" value="تجاری" />
+            <label for="prop5">تجاری</label>
+
+            <input type="radio" name="property-type" id="prop6" value="مسکونی" />
+            <label for="prop6">مسکونی</label>
+          </div>
         </div>
 
+        <!-- بودجه به میلیارد -->
         <div class="form-group">
-          <label for="property-type">نوع ملک درخواستی</label>
-          <select id="property-type" name="property-type" required>
-            <option value="">لطفاً انتخاب کنید</option>
-            <option value="apartment">آپارتمان</option>
-            <option value="villa">ویلا</option>
-            <option value="land">زمین</option>
-            <option value="commercial">تجاری</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label for="budget">بودجه (تومان)</label>
+          <label for="budget">بودجه (میلیارد تومان)</label>
           <input
             type="number"
             id="budget"
             name="budget"
-            placeholder="مثلاً ۵۰۰,۰۰۰,۰۰۰"
+            step="0.01"
+            min="1"
+            max="100"
+            placeholder="مثلاً ۲.۵"
           />
+          <div class="error-message" id="budgetError">
+            بودجه باید بین ۱ تا ۱۰۰ میلیارد تومان باشد
+          </div>
         </div>
 
+        <!-- نحوه پرداخت (رادیو باتن سفارشی) -->
+        <div class="form-group">
+          <label>نحوه پرداخت</label>
+          <div class="payment-group">
+            <input type="radio" name="payment" id="pay1" value="نقد" required />
+            <label for="pay1">نقد</label>
+
+            <input type="radio" name="payment" id="pay2" value="معاوضه" />
+            <label for="pay2">معاوضه</label>
+          </div>
+        </div>
+
+        <!-- توضیحات با محدودیت 500 کاراکتر -->
         <div class="form-group">
           <label for="details">توضیحات بیشتر</label>
           <textarea
             id="details"
             name="details"
             rows="4"
-            placeholder="توضیحات اضافی در مورد ملک مورد نظر"
+            maxlength="500"
+            placeholder="توضیحات اضافی در مورد ملک مورد نظر (حداکثر ۵۰۰ کاراکتر)"
           ></textarea>
+        </div>
+
+        <!-- متن بالای دکمه ارسال -->
+        <div class="info-message">
+          فرم شما در اختیار مشاورین قرار خواهد گرفت و به زودی بررسی می‌شود.
         </div>
 
         <button type="submit">ارسال درخواست</button>
       </form>
-      <div class="footer">اطلاعات شما محرمانه خواهد ماند.</div>
+
+      <!-- بنر ایتا با لینک گروه -->
+      <div class="eitaa-banner">
+        <a href="https://eitaa.com/your_group_link" target="_blank" rel="noopener noreferrer">
+          <i class="fab fa-eitaa" style="font-family: 'Font Awesome 6 Brands'; font-weight: 400;"></i>
+          <span>ورود به گروه ایتا آگهی ملک</span>
+        </a>
+      </div>
+
+      <!-- فوتر شامل محرمانگی و اعتبار -->
+      <div class="footer">
+        <p>اطلاعات شما محرمانه خواهد ماند.</p>
+        <p class="credit">طراحی و توسعه یافته توسط webtc 0901680238</p>
+      </div>
     </div>
+
+    <script>
+      // اعتبارسنجی پیشرفته شماره تماس و بودجه
+      document.addEventListener("DOMContentLoaded", function () {
+        const form = document.getElementById("propertyForm");
+        const phoneInput = document.getElementById("phone");
+        const budgetInput = document.getElementById("budget");
+        const phoneError = document.getElementById("phoneError");
+        const budgetError = document.getElementById("budgetError");
+
+        // تابع اعتبارسنجی شماره تماس
+        function validatePhone() {
+          const phone = phoneInput.value.trim();
+          const phoneRegex = /^09[0-9]{9}$/; // شروع با 09 و 11 رقم
+          if (phone && !phoneRegex.test(phone)) {
+            phoneInput.classList.add("error");
+            phoneError.classList.add("show");
+            return false;
+          } else {
+            phoneInput.classList.remove("error");
+            phoneError.classList.remove("show");
+            return true;
+          }
+        }
+
+        // تابع اعتبارسنجی بودجه
+        function validateBudget() {
+          const budget = budgetInput.value.trim();
+          if (budget !== "") {
+            const budgetNum = parseFloat(budget);
+            if (isNaN(budgetNum) || budgetNum < 1 || budgetNum > 100) {
+              budgetInput.classList.add("error");
+              budgetError.classList.add("show");
+              return false;
+            } else {
+              budgetInput.classList.remove("error");
+              budgetError.classList.remove("show");
+              return true;
+            }
+          } else {
+            // اگر بودجه خالی باشد (اختیاری) ایراد ندارد
+            budgetInput.classList.remove("error");
+            budgetError.classList.remove("show");
+            return true;
+          }
+        }
+
+        // اعتبارسنجی هنگام تایپ
+        phoneInput.addEventListener("input", validatePhone);
+        budgetInput.addEventListener("input", validateBudget);
+
+        // اعتبارسنجی هنگام ارسال فرم
+        form.addEventListener("submit", function (e) {
+          const isPhoneValid = validatePhone();
+          const isBudgetValid = validateBudget();
+
+          if (!isPhoneValid || !isBudgetValid) {
+            e.preventDefault();
+            // اگر شماره تماس معتبر نیست، فوکوس روی آن
+            if (!isPhoneValid) {
+              phoneInput.focus();
+            } else if (!isBudgetValid) {
+              budgetInput.focus();
+            }
+          }
+        });
+
+        // پاک کردن خطا هنگام تغییر (برای اطمینان)
+        phoneInput.addEventListener("blur", validatePhone);
+        budgetInput.addEventListener("blur", validateBudget);
+      });
+    </script>
   </body>
 </html>
