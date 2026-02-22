@@ -11,7 +11,7 @@
     <!-- Font Awesome for Eitaa icon (using a simple SVG alternative if needed) -->
     <link
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
     />
     <style>
       body {
@@ -160,6 +160,249 @@
       .error-message.show {
         display: block;
       }
+      /* ----------------------- */
+      /* استایل کانتینر چک‌باکس‌های سفارشی */
+      .checkbox-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 5px;
+      }
+
+      /* مخفی کردن چک‌باکس اصلی */
+      .checkbox-group input[type="checkbox"] {
+        position: absolute;
+        opacity: 0;
+        width: 0;
+        height: 0;
+        pointer-events: none;
+      }
+
+      /* استایل لیبل (باکس انتخاب) برای چک‌باکس */
+      .checkbox-group label {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 20px;
+        background-color: #fff;
+        border: 2px solid #e1e5e9;
+        border-radius: 10px;
+        font-size: 15px;
+        font-weight: 500;
+        color: #555;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        margin-bottom: 0;
+        min-width: 70px;
+        text-align: center;
+        user-select: none;
+      }
+
+      /* حالت hover */
+      .checkbox-group label:hover {
+        border-color: #a088c0;
+        background-color: #f9f5ff;
+      }
+
+      /* استایل برای گزینه انتخاب شده */
+      .checkbox-group input[type="checkbox"]:checked + label {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border-color: transparent;
+        box-shadow: 0 4px 10px rgba(102, 126, 234, 0.3);
+      }
+      /* تبدیل checkbox-group به گرید چند ستونه */
+      .checkbox-group {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 12px;
+        margin-top: 5px;
+      }
+
+      /* تنظیم لیبل‌ها برای پر کردن عرض ستون */
+      .checkbox-group label {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 15px;
+        background-color: #fff;
+        border: 2px solid #e1e5e9;
+        border-radius: 10px;
+        font-size: 14px;
+        font-weight: 500;
+        color: #555;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        margin-bottom: 0;
+        text-align: center;
+        user-select: none;
+        width: 100%;
+        box-sizing: border-box;
+      }
+      /* ==== */
+      /* استایل دراپ‌داون چک‌باکس */
+      .dropdown-checkbox {
+        position: relative;
+      }
+
+      .dropdown-selector {
+        width: 100%;
+        padding: 12px 15px;
+        border: 2px solid #e1e5e9;
+        border-radius: 8px;
+        background: white;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-sizing: border-box;
+        font-family: inherit;
+        font-size: 16px;
+        color: #555;
+      }
+
+      .dropdown-selector:hover {
+        border-color: #a088c0;
+      }
+
+      .dropdown-content {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: white;
+        border: 2px solid #e1e5e9;
+        border-radius: 8px;
+        margin-top: 5px;
+        max-height: 300px;
+        overflow-y: auto;
+        display: none;
+        z-index: 1000;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      }
+
+      .dropdown-content.show {
+        display: block;
+      }
+
+      .dropdown-header {
+        padding: 10px 15px;
+        border-bottom: 1px solid #e1e5e9;
+        position: sticky;
+        top: 0;
+        background: white;
+        z-index: 2;
+      }
+
+      /* استایل برای انتخاب همه */
+      .select-all {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: #555;
+        cursor: pointer;
+      }
+
+      /* مخفی کردن چک‌باکس اصلی */
+      .select-all input[type="checkbox"] {
+        position: absolute;
+        opacity: 0;
+        width: 0;
+        height: 0;
+        pointer-events: none;
+      }
+
+      /* استایل لیبل انتخاب همه */
+      .select-all label {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 8px 16px;
+        background-color: #fff;
+        border: 2px solid #e1e5e9;
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: 500;
+        color: #555;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        margin-bottom: 0;
+        user-select: none;
+      }
+
+      .select-all label:hover {
+        border-color: #a088c0;
+        background-color: #f9f5ff;
+      }
+
+      .select-all input[type="checkbox"]:checked + label {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border-color: transparent;
+        box-shadow: 0 4px 10px rgba(102, 126, 234, 0.3);
+      }
+
+      .checkbox-group-vertical {
+        padding: 10px;
+      }
+
+      .checkbox-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 5px;
+      }
+
+      /* مخفی کردن چک‌باکس اصلی */
+      .checkbox-item input[type="checkbox"] {
+        position: absolute;
+        opacity: 0;
+        width: 0;
+        height: 0;
+        pointer-events: none;
+      }
+
+      /* استایل لیبل (باکس انتخاب) */
+      .checkbox-item label {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 20px;
+        background-color: #fff;
+        border: 2px solid #e1e5e9;
+        border-radius: 10px;
+        font-size: 15px;
+        font-weight: 500;
+        color: #555;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        margin-bottom: 0;
+        min-width: 70px;
+        text-align: center;
+        user-select: none;
+        width: 100%;
+        box-sizing: border-box;
+      }
+
+      /* حالت hover */
+      .checkbox-item label:hover {
+        border-color: #a088c0;
+        background-color: #f9f5ff;
+      }
+
+      /* استایل برای گزینه انتخاب شده */
+      .checkbox-item input[type="checkbox"]:checked + label {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border-color: transparent;
+        box-shadow: 0 4px 10px rgba(102, 126, 234, 0.3);
+      }
+
+      .dropdown-icon {
+        font-size: 12px;
+        color: #999;
+      }
+      /* ==== */
+      /* ----------------------- */
 
       button {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -262,7 +505,7 @@
       >
         <!-- اطلاعات تماس -->
         <div class="form-group">
-          <label for="name">نام خانوادگی</label>
+          <label for="name"><i class="fas fa-user"></i>نام خانوادگی </label>
           <input
             type="text"
             id="name"
@@ -273,7 +516,7 @@
         </div>
 
         <div class="form-group">
-          <label for="phone">شماره تماس</label>
+          <label for="phone"><i class="fas fa-phone"></i>شماره تماس</label>
           <input
             type="tel"
             id="phone"
@@ -288,7 +531,7 @@
 
         <!-- نوع ملک (رادیو باتن سفارشی) -->
         <div class="form-group">
-          <label>نوع ملک درخواستی</label>
+          <label><i class="fas fa-building"></i>نوع ملک درخواستی</label>
           <div class="radio-group">
             <input
               type="radio"
@@ -328,12 +571,21 @@
               value="مسکونی"
             />
             <label for="prop6">مسکونی</label>
+            <input
+              type="radio"
+              name="property-type"
+              id="prop7"
+              value="کارگاه / سوله"
+            />
+            <label for="prop7">کارگاه / سوله</label>
           </div>
         </div>
 
         <!-- بودجه به میلیارد -->
         <div class="form-group">
-          <label for="budget">بودجه (میلیارد تومان)</label>
+          <label for="budget"
+            ><i class="fas fa-coins"></i>بودجه (میلیارد تومان)</label
+          >
           <input
             type="number"
             id="budget"
@@ -348,9 +600,115 @@
           </div>
         </div>
 
+        <div class="form-group dropdown-checkbox">
+          <label>محدوده ملک (قابلیت انتخاب چند گزینه)</label>
+          <div class="dropdown-selector" onclick="toggleDropdown(event)">
+            <span id="selectedCount">محدوده‌ها را انتخاب کنید</span>
+            <span class="dropdown-icon">▼</span>
+          </div>
+
+          <div class="dropdown-content" id="areaDropdown">
+            <div class="dropdown-header">
+              <div class="select-all">
+                <input
+                  type="checkbox"
+                  id="selectAll"
+                  onchange="selectAllAreas(this)"
+                />
+                <label for="selectAll">انتخاب همه</label>
+              </div>
+            </div>
+            <div class="checkbox-group-vertical">
+              <div class="checkbox-item">
+                <input
+                  type="checkbox"
+                  name="area"
+                  id="area1"
+                  value="بلوار فجر"
+                />
+                <label for="area1">بلوار فجر</label>
+              </div>
+
+              <div class="checkbox-item">
+                <input
+                  type="checkbox"
+                  name="area"
+                  id="area2"
+                  value="منتظری شمالی"
+                />
+                <label for="area2">منتظری شمالی</label>
+              </div>
+
+              <div class="checkbox-item">
+                <input
+                  type="checkbox"
+                  name="area"
+                  id="area3"
+                  value="شریعتی شرقی"
+                />
+                <label for="area3">شریعتی شرقی</label>
+              </div>
+
+              <div class="checkbox-item">
+                <input
+                  type="checkbox"
+                  name="area"
+                  id="area4"
+                  value="شریعتی غربی"
+                />
+                <label for="area4">شریعتی غربی</label>
+              </div>
+
+              <div class="checkbox-item">
+                <input
+                  type="checkbox"
+                  name="area"
+                  id="area5"
+                  value="امام شرقی"
+                />
+                <label for="area5">امام شرقی</label>
+              </div>
+
+              <div class="checkbox-item">
+                <input type="checkbox" name="area" id="area6" value="چهارباغ" />
+                <label for="area6">چهارباغ</label>
+              </div>
+
+              <div class="checkbox-item">
+                <input
+                  type="checkbox"
+                  name="area"
+                  id="area7"
+                  value="بلوار طالقانی و ایزدی"
+                />
+                <label for="area7">بلوار طالقانی و ایزدی</label>
+              </div>
+
+              <div class="checkbox-item">
+                <input
+                  type="checkbox"
+                  name="area"
+                  id="area8"
+                  value="بلوار ولی عصر و بهارستان"
+                />
+                <label for="area8">بلوار ولی عصر و بهارستان</label>
+              </div>
+
+              <div class="checkbox-item">
+                <input
+                  type="checkbox"
+                  name="area"
+                  id="area9"
+                  value="امیرآباد"
+                />
+                <label for="area9">امیرآباد</label>
+              </div>
+            </div>
+          </div>
+        </div>
         <!-- نحوه پرداخت (رادیو باتن سفارشی) -->
         <div class="form-group">
-          <label>نحوه پرداخت</label>
+          <label><i class="fas fa-credit-card"></i>نحوه پرداخت</label>
           <div class="payment-group">
             <input type="radio" name="payment" id="pay1" value="نقد" required />
             <label for="pay1">نقد</label>
@@ -362,7 +720,9 @@
 
         <!-- توضیحات با محدودیت 500 کاراکتر -->
         <div class="form-group">
-          <label for="details">توضیحات بیشتر</label>
+          <label for="details"
+            ><i class="fas fa-pencil-alt"></i>توضیحات بیشتر</label
+          >
           <textarea
             id="details"
             name="details"
@@ -480,6 +840,56 @@
         phoneInput.addEventListener("blur", validatePhone);
         budgetInput.addEventListener("blur", validateBudget);
       });
+      //   ====
+      function toggleDropdown(event) {
+        event.stopPropagation();
+        document.getElementById("areaDropdown").classList.toggle("show");
+      }
+
+      function selectAllAreas(selectAllCheckbox) {
+        const checkboxes = document.querySelectorAll(
+          '.checkbox-item input[type="checkbox"]',
+        );
+        checkboxes.forEach((checkbox) => {
+          checkbox.checked = selectAllCheckbox.checked;
+        });
+        updateSelectedCount();
+      }
+
+      function updateSelectedCount() {
+        const checkboxes = document.querySelectorAll(
+          '.checkbox-item input[type="checkbox"]:checked',
+        );
+        const count = checkboxes.length;
+        const span = document.getElementById("selectedCount");
+
+        if (count === 0) {
+          span.textContent = "محدوده‌ها را انتخاب کنید";
+        } else {
+          span.textContent = `${count} محدوده انتخاب شده`;
+        }
+      }
+
+      // بستن دراپ‌داون با کلیک خارج از آن
+      document.addEventListener("click", function (event) {
+        const dropdown = document.getElementById("areaDropdown");
+        const selector = document.querySelector(".dropdown-selector");
+
+        if (
+          !selector.contains(event.target) &&
+          !dropdown.contains(event.target)
+        ) {
+          dropdown.classList.remove("show");
+        }
+      });
+
+      // آپدیت تعداد انتخاب‌ها با هر تغییر
+      document
+        .querySelectorAll('.checkbox-item input[type="checkbox"]')
+        .forEach((checkbox) => {
+          checkbox.addEventListener("change", updateSelectedCount);
+        });
+      // ====
     </script>
   </body>
 </html>
