@@ -493,254 +493,566 @@
         color: #667eea;
         font-weight: 500;
       }
+      .select {
+        display: flex;
+        justify-content: space-around;
+        background: white;
+        border-radius: 24px;
+        margin-bottom: 20px;
+        input {
+          display: none;
+        }
+        label {
+          font-family: Arial, Helvetica, sans-serif;
+          font-weight: normal;
+          font-size: 1.5rem;
+          flex: 1;
+          text-align: center;
+          padding: 12px;
+          margin: 0;
+          cursor: pointer;
+          transition: 0.3s;
+        }
+      }
+      #request:checked + label,
+      #register:checked + label {
+        background: purple;
+        color: white;
+        border-radius: 24px;
+        font-weight: bold;
+      }
+      a {
+        text-decoration: none;
+        cursor: pointer;
+      }
+      .hidden {
+        display: none;
+      }
+      .tip h1 {
+        display: flex;
+        justify-content: center;
+      }
     </style>
   </head>
   <body>
     <div class="form-container">
-      <h2>فرم درخواست ملک</h2>
-      <form
-        id="propertyForm"
-        action="https://formspree.io/f/mvzbblor"
-        method="POST"
-      >
-        <!-- اطلاعات تماس -->
-        <div class="form-group">
-          <label for="name"><i class="fas fa-user"></i>نام خانوادگی </label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            placeholder="مثلاً آقای رضایی"
-            required
-          />
-        </div>
+      <div class="tip">
+        <h1>املاک مشاورین بازار</h1>
+        <h3>نوع فرم انتخاب کنید:</h3>
+      </div>
+      <div class="select">
+        <input type="radio" name="tab" id="request" />
+        <label for="request">درخواست ملک</label>
 
-        <div class="form-group">
-          <label for="phone"><i class="fas fa-phone"></i>شماره تماس</label>
-          <input
-            type="tel"
-            id="phone"
-            name="phone"
-            placeholder="مثلاً 09123456789"
-            required
-          />
-          <div class="error-message" id="phoneError">
-            شماره موبایل باید با ۰۹ شروع شود و ۱۱ رقم باشد
+        <input type="radio" name="tab" id="register" checked />
+        <label for="register">ثبت ملک</label>
+      </div>
+      <div class="form2" id="form2">
+        <form
+          id="propertyForm2"
+          action="https://formspree.io/f/mvzbblor"
+          method="POST"
+        >
+          <div>
+            <input type="hidden" name="source" value="آگهی ملک فروشی " />
           </div>
-        </div>
-
-        <!-- نوع ملک (رادیو باتن سفارشی) -->
-        <div class="form-group">
-          <label><i class="fas fa-building"></i>نوع ملک درخواستی</label>
-          <div class="radio-group">
+          <!-- اطلاعات تماس -->
+          <div class="form-group">
+            <label for="name"><i class="fas fa-user"></i>نام خانوادگی </label>
             <input
-              type="radio"
-              name="property-type"
-              id="prop1"
-              value="زمین"
+              type="text"
+              id="name"
+              name="name"
+              placeholder="مثلاً آقای رضایی"
               required
             />
-            <label for="prop1">زمین</label>
-
-            <input type="radio" name="property-type" id="prop2" value="نوساز" />
-            <label for="prop2">نوساز</label>
-
-            <input
-              type="radio"
-              name="property-type"
-              id="prop3"
-              value="باغ ویلا"
-            />
-            <label for="prop3">باغ ویلا</label>
-
-            <input
-              type="radio"
-              name="property-type"
-              id="prop4"
-              value="آهن اجر"
-            />
-            <label for="prop4">آهن اجر</label>
-
-            <input type="radio" name="property-type" id="prop5" value="تجاری" />
-            <label for="prop5">تجاری</label>
-
-            <input
-              type="radio"
-              name="property-type"
-              id="prop6"
-              value="مسکونی"
-            />
-            <label for="prop6">مسکونی</label>
-            <input
-              type="radio"
-              name="property-type"
-              id="prop7"
-              value="کارگاه / سوله"
-            />
-            <label for="prop7">کارگاه / سوله</label>
           </div>
-        </div>
-
-        <!-- بودجه به میلیارد -->
-        <div class="form-group">
-          <label for="budget"
-            ><i class="fas fa-coins"></i>بودجه (میلیارد تومان)</label
-          >
-          <input
-            type="number"
-            id="budget"
-            name="budget"
-            step="0.01"
-            min="1"
-            max="100"
-            placeholder="مثلاً ۲.۵"
-          />
-          <div class="error-message" id="budgetError">
-            بودجه باید بین ۱ تا ۱۰۰ میلیارد تومان باشد
-          </div>
-        </div>
-
-        <div class="form-group dropdown-checkbox">
-          <label>محدوده ملک (قابلیت انتخاب چند گزینه)</label>
-          <div class="dropdown-selector" onclick="toggleDropdown(event)">
-            <span id="selectedCount">محدوده‌ها را انتخاب کنید</span>
-            <span class="dropdown-icon">▼</span>
-          </div>
-
-          <div class="dropdown-content" id="areaDropdown">
-            <div class="dropdown-header">
-              <div class="select-all">
-                <input
-                  type="checkbox"
-                  id="selectAll"
-                  onchange="selectAllAreas(this)"
-                />
-                <label for="selectAll">انتخاب همه</label>
-              </div>
-            </div>
-            <div class="checkbox-group-vertical">
-              <div class="checkbox-item">
-                <input
-                  type="checkbox"
-                  name="area"
-                  id="area1"
-                  value="بلوار فجر"
-                />
-                <label for="area1">بلوار فجر</label>
-              </div>
-
-              <div class="checkbox-item">
-                <input
-                  type="checkbox"
-                  name="area"
-                  id="area2"
-                  value="منتظری شمالی"
-                />
-                <label for="area2">منتظری شمالی</label>
-              </div>
-
-              <div class="checkbox-item">
-                <input
-                  type="checkbox"
-                  name="area"
-                  id="area3"
-                  value="شریعتی شرقی"
-                />
-                <label for="area3">شریعتی شرقی</label>
-              </div>
-
-              <div class="checkbox-item">
-                <input
-                  type="checkbox"
-                  name="area"
-                  id="area4"
-                  value="شریعتی غربی"
-                />
-                <label for="area4">شریعتی غربی</label>
-              </div>
-
-              <div class="checkbox-item">
-                <input
-                  type="checkbox"
-                  name="area"
-                  id="area5"
-                  value="امام شرقی"
-                />
-                <label for="area5">امام شرقی</label>
-              </div>
-
-              <div class="checkbox-item">
-                <input type="checkbox" name="area" id="area6" value="چهارباغ" />
-                <label for="area6">چهارباغ</label>
-              </div>
-
-              <div class="checkbox-item">
-                <input
-                  type="checkbox"
-                  name="area"
-                  id="area7"
-                  value="بلوار طالقانی و ایزدی"
-                />
-                <label for="area7">بلوار طالقانی و ایزدی</label>
-              </div>
-
-              <div class="checkbox-item">
-                <input
-                  type="checkbox"
-                  name="area"
-                  id="area8"
-                  value="بلوار ولی عصر و بهارستان"
-                />
-                <label for="area8">بلوار ولی عصر و بهارستان</label>
-              </div>
-
-              <div class="checkbox-item">
-                <input
-                  type="checkbox"
-                  name="area"
-                  id="area9"
-                  value="امیرآباد"
-                />
-                <label for="area9">امیرآباد</label>
-              </div>
+          <div class="form-group">
+            <label for="phone"><i class="fas fa-phone"></i>شماره تماس</label>
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              placeholder="مثلاً 09123456789"
+              required
+            />
+            <div class="error-message" id="phoneError">
+              شماره موبایل باید با ۰۹ شروع شود و ۱۱ رقم باشد
             </div>
           </div>
-        </div>
-        <!-- نحوه پرداخت (رادیو باتن سفارشی) -->
-        <div class="form-group">
-          <label><i class="fas fa-credit-card"></i>نحوه پرداخت</label>
-          <div class="payment-group">
-            <input type="radio" name="payment" id="pay1" value="نقد" required />
-            <label for="pay1">نقد</label>
-
-            <input type="radio" name="payment" id="pay2" value="معاوضه" />
-            <label for="pay2">معاوضه</label>
+          <!-- نوع ملک (رادیو باتن سفارشی) -->
+          <div class="form-group">
+            <label><i class="fas fa-building"></i>نوع ملک فروشی</label>
+            <div class="radio-group">
+              <input
+                type="radio"
+                name="property-type"
+                id="prop1"
+                value="زمین"
+                required
+              />
+              <label for="prop1">زمین</label>
+              <input
+                type="radio"
+                name="property-type"
+                id="prop2"
+                value="نوساز"
+              />
+              <label for="prop2">نوساز</label>
+              <input
+                type="radio"
+                name="property-type"
+                id="prop3"
+                value="باغ ویلا"
+              />
+              <label for="prop3">باغ ویلا</label>
+              <input
+                type="radio"
+                name="property-type"
+                id="prop4"
+                value="آهن اجر"
+              />
+              <label for="prop4">آهن اجر</label>
+              <input
+                type="radio"
+                name="property-type"
+                id="prop5"
+                value="تجاری"
+              />
+              <label for="prop5">تجاری</label>
+              <input
+                type="radio"
+                name="property-type"
+                id="prop6"
+                value="مسکونی"
+              />
+              <label for="prop6">مسکونی</label>
+              <input
+                type="radio"
+                name="property-type"
+                id="prop7"
+                value="کارگاه / سوله"
+              />
+              <label for="prop7">کارگاه/سوله</label>
+              <input
+                type="radio"
+                name="property-type"
+                id="prop8"
+                value="سفتکاری"
+              />
+              <label for="prop8">سفتکاری</label>
+            </div>
           </div>
-        </div>
+          <!-- بودجه به میلیارد -->
 
-        <!-- توضیحات با محدودیت 500 کاراکتر -->
-        <div class="form-group">
-          <label for="details"
-            ><i class="fas fa-pencil-alt"></i>توضیحات بیشتر</label
-          >
-          <textarea
-            id="details"
-            name="details"
-            rows="4"
-            maxlength="500"
-            placeholder="توضیحات اضافی در مورد ملک مورد نظر (حداکثر ۵۰۰ کاراکتر)"
-          ></textarea>
-        </div>
+          <div class="form-group">
+            <label for="room">تعداد کل خواب</label>
+            <input
+              type="number"
+              id="room"
+              name="room"
+              step="1"
+              min="0"
+              max="10"
+              placeholder=" تعداد خواب"
+            />
+            <label for="budget"
+              ><i class="fas fa-coins"></i>قیمت کارشناسی (میلیاردتومان)</label
+            >
+            <input
+              type="number"
+              id="budget"
+              name="budget"
+              step="0.01"
+              min="1"
+              max="100"
+              placeholder="مثلاً ۲.۵"
+            />
+            <div class="error-message" id="budgetError">
+              بودجه باید بین ۱ تا ۱۰۰ میلیارد تومان باشد
+            </div>
+          </div>
+          <div class="form-group dropdown-checkbox">
+            <label>محدوده ملک </label>
+            <div class="dropdown-selector" onclick="toggleDropdown(event)">
+              <span id="selectedCount">محدوده‌ها را انتخاب کنید</span>
+              <span class="dropdown-icon">▼</span>
+            </div>
+            <div class="dropdown-content" id="areaDropdown">
+              <div class="dropdown-header">
+                <div class="select-all">
+                  <input
+                    type="checkbox"
+                    id="selectAll"
+                    onchange="selectAllAreas(this)"
+                  />
+                  <label for="selectAll">انتخاب همه</label>
+                </div>
+              </div>
+              <div class="checkbox-group-vertical">
+                <div class="checkbox-item">
+                  <input
+                    type="checkbox"
+                    name="area"
+                    id="area1"
+                    value="بلوار فجر"
+                  />
+                  <label for="area1">بلوار فجر</label>
+                </div>
+                <div class="checkbox-item">
+                  <input
+                    type="checkbox"
+                    name="area"
+                    id="area2"
+                    value="منتظری شمالی"
+                  />
+                  <label for="area2">منتظری شمالی</label>
+                </div>
+                <div class="checkbox-item">
+                  <input
+                    type="checkbox"
+                    name="area"
+                    id="area3"
+                    value="شریعتی شرقی"
+                  />
+                  <label for="area3">شریعتی شرقی</label>
+                </div>
+                <div class="checkbox-item">
+                  <input
+                    type="checkbox"
+                    name="area"
+                    id="area4"
+                    value="شریعتی غربی"
+                  />
+                  <label for="area4">شریعتی غربی</label>
+                </div>
+                <div class="checkbox-item">
+                  <input
+                    type="checkbox"
+                    name="area"
+                    id="area5"
+                    value="امام شرقی"
+                  />
+                  <label for="area5">امام شرقی</label>
+                </div>
+                <div class="checkbox-item">
+                  <input
+                    type="checkbox"
+                    name="area"
+                    id="area6"
+                    value="چهارباغ"
+                  />
+                  <label for="area6">چهارباغ</label>
+                </div>
+                <div class="checkbox-item">
+                  <input
+                    type="checkbox"
+                    name="area"
+                    id="area7"
+                    value="بلوار طالقانی و ایزدی"
+                  />
+                  <label for="area7">بلوار طالقانی و ایزدی</label>
+                </div>
+                <div class="checkbox-item">
+                  <input
+                    type="checkbox"
+                    name="area"
+                    id="area8"
+                    value="بلوار ولی عصر و بهارستان"
+                  />
+                  <label for="area8">بلوار ولی عصر و بهارستان</label>
+                </div>
+                <div class="checkbox-item">
+                  <input
+                    type="checkbox"
+                    name="area"
+                    id="area9"
+                    value="امیرآباد"
+                  />
+                  <label for="area9">امیرآباد</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- نحوه پرداخت (رادیو باتن سفارشی) -->
+          <div class="form-group">
+            <label><i class="fas fa-credit-card"></i>نحوه فروش</label>
+            <div class="payment-group">
+              <input
+                type="radio"
+                name="payment"
+                id="pay1"
+                value="نقد"
+                required
+              />
+              <label for="pay1">نقد</label>
+              <input type="radio" name="payment" id="pay2" value="معاوضه" />
+              <label for="pay2">قابل معاوضه </label>
+            </div>
+          </div>
+          <!-- توضیحات با محدودیت 500 کاراکتر -->
+          <div class="form-group">
+            <label for="details"
+              ><i class="fas fa-pencil-alt"></i>توضیحات بیشتر</label
+            >
+            <textarea
+              id="details"
+              name="details"
+              rows="4"
+              maxlength="500"
+              placeholder="توضیحات اضافی در مورد ملک مورد نظر (حداکثر ۵۰۰ کاراکتر)"
+            ></textarea>
+          </div>
+          <!-- متن بالای دکمه ارسال -->
+          <div class="info-message">
+            فرم شما در اختیار مشاورین قرار خواهد گرفت و به زودی بررسی می‌شود.
+          </div>
+          <button type="submit">ارسال درخواست</button>
+        </form>
+      </div>
+      <div class="form1 hidden" id="form1">
+        <form
+          id="propertyForm"
+          action="https://formspree.io/f/mvzbblor"
+          method="POST"
+        >
+          <!-- اطلاعات تماس -->
+          <div class="form-group">
+            <label for="name"><i class="fas fa-user"></i>نام خانوادگی </label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              placeholder="مثلاً آقای رضایی"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="phone"><i class="fas fa-phone"></i>شماره تماس</label>
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              placeholder="مثلاً 09123456789"
+              required
+            />
+            <div class="error-message" id="phoneError">
+              شماره موبایل باید با ۰۹ شروع شود و ۱۱ رقم باشد
+            </div>
+          </div>
+          <!-- نوع ملک (رادیو باتن سفارشی) -->
+          <div class="form-group">
+            <label><i class="fas fa-building"></i>نوع ملک درخواستی</label>
+            <div class="radio-group">
+              <input
+                type="radio"
+                name="property-type"
+                id="prop1"
+                value="زمین"
+                required
+              />
+              <label for="prop1">زمین</label>
+              <input
+                type="radio"
+                name="property-type"
+                id="prop2"
+                value="نوساز"
+              />
+              <label for="prop2">نوساز</label>
+              <input
+                type="radio"
+                name="property-type"
+                id="prop3"
+                value="باغ ویلا"
+              />
+              <label for="prop3">باغ ویلا</label>
+              <input
+                type="radio"
+                name="property-type"
+                id="prop4"
+                value="آهن اجر"
+              />
+              <label for="prop4">آهن اجر</label>
+              <input
+                type="radio"
+                name="property-type"
+                id="prop5"
+                value="تجاری"
+              />
+              <label for="prop5">تجاری</label>
+              <input
+                type="radio"
+                name="property-type"
+                id="prop6"
+                value="مسکونی"
+              />
+              <label for="prop6">مسکونی</label>
+              <input
+                type="radio"
+                name="property-type"
+                id="prop7"
+                value="کارگاه / سوله"
+              />
+              <label for="prop7">کارگاه / سوله</label>
+            </div>
+          </div>
+          <!-- بودجه به میلیارد -->
+          <div class="form-group">
+            <label for="budget"
+              ><i class="fas fa-coins"></i>بودجه (میلیارد تومان)</label
+            >
+            <input
+              type="number"
+              id="budget"
+              name="budget"
+              step="0.01"
+              min="1"
+              max="100"
+              placeholder="مثلاً ۲.۵"
+            />
+            <div class="error-message" id="budgetError">
+              بودجه باید بین ۱ تا ۱۰۰ میلیارد تومان باشد
+            </div>
+          </div>
+          <div class="form-group dropdown-checkbox">
+            <label>محدوده ملک (قابلیت انتخاب چند گزینه)</label>
+            <div class="dropdown-selector" onclick="toggleDropdown(event)">
+              <span id="selectedCount">محدوده‌ها را انتخاب کنید</span>
+              <span class="dropdown-icon">▼</span>
+            </div>
+            <div class="dropdown-content" id="areaDropdown">
+              <div class="dropdown-header">
+                <div class="select-all">
+                  <input
+                    type="checkbox"
+                    id="selectAll"
+                    onchange="selectAllAreas(this)"
+                  />
+                  <label for="selectAll">انتخاب همه</label>
+                </div>
+              </div>
+              <div class="checkbox-group-vertical">
+                <div class="checkbox-item">
+                  <input
+                    type="checkbox"
+                    name="area"
+                    id="area1"
+                    value="بلوار فجر"
+                  />
+                  <label for="area1">بلوار فجر</label>
+                </div>
+                <div class="checkbox-item">
+                  <input
+                    type="checkbox"
+                    name="area"
+                    id="area2"
+                    value="منتظری شمالی"
+                  />
+                  <label for="area2">منتظری شمالی</label>
+                </div>
+                <div class="checkbox-item">
+                  <input
+                    type="checkbox"
+                    name="area"
+                    id="area3"
+                    value="شریعتی شرقی"
+                  />
+                  <label for="area3">شریعتی شرقی</label>
+                </div>
+                <div class="checkbox-item">
+                  <input
+                    type="checkbox"
+                    name="area"
+                    id="area4"
+                    value="شریعتی غربی"
+                  />
+                  <label for="area4">شریعتی غربی</label>
+                </div>
+                <div class="checkbox-item">
+                  <input
+                    type="checkbox"
+                    name="area"
+                    id="area5"
+                    value="امام شرقی"
+                  />
+                  <label for="area5">امام شرقی</label>
+                </div>
+                <div class="checkbox-item">
+                  <input
+                    type="checkbox"
+                    name="area"
+                    id="area6"
+                    value="چهارباغ"
+                  />
+                  <label for="area6">چهارباغ</label>
+                </div>
+                <div class="checkbox-item">
+                  <input
+                    type="checkbox"
+                    name="area"
+                    id="area7"
+                    value="بلوار طالقانی و ایزدی"
+                  />
+                  <label for="area7">بلوار طالقانی و ایزدی</label>
+                </div>
+                <div class="checkbox-item">
+                  <input
+                    type="checkbox"
+                    name="area"
+                    id="area8"
+                    value="بلوار ولی عصر و بهارستان"
+                  />
+                  <label for="area8">بلوار ولی عصر و بهارستان</label>
+                </div>
+                <div class="checkbox-item">
+                  <input
+                    type="checkbox"
+                    name="area"
+                    id="area9"
+                    value="امیرآباد"
+                  />
+                  <label for="area9">امیرآباد</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- نحوه پرداخت (رادیو باتن سفارشی) -->
+          <div class="form-group">
+            <label><i class="fas fa-credit-card"></i>نحوه پرداخت</label>
+            <div class="payment-group">
+              <input
+                type="radio"
+                name="payment"
+                id="pay1"
+                value="نقد"
+                required
+              />
+              <label for="pay1">نقد</label>
+              <input type="radio" name="payment" id="pay2" value="معاوضه" />
+              <label for="pay2">معاوضه</label>
+            </div>
+          </div>
+          <!-- توضیحات با محدودیت 500 کاراکتر -->
+          <div class="form-group">
+            <label for="details"
+              ><i class="fas fa-pencil-alt"></i>توضیحات بیشتر</label
+            >
+            <textarea
+              id="details"
+              name="details"
+              rows="4"
+              maxlength="500"
+              placeholder="توضیحات اضافی در مورد ملک مورد نظر (حداکثر ۵۰۰ کاراکتر)"
+            ></textarea>
+          </div>
+          <!-- متن بالای دکمه ارسال -->
+          <div class="info-message">
+            فرم شما در اختیار مشاورین قرار خواهد گرفت و به زودی بررسی می‌شود.
+          </div>
+          <button type="submit">ارسال درخواست</button>
+        </form>
+      </div>
 
-        <!-- متن بالای دکمه ارسال -->
-        <div class="info-message">
-          فرم شما در اختیار مشاورین قرار خواهد گرفت و به زودی بررسی می‌شود.
-        </div>
-
-        <button type="submit">ارسال درخواست</button>
-      </form>
-
-      <!-- بنر ایتا با لینک گروه -->
       <div class="eitaa-banner">
         <a
           href="https://search.eitaa.com/?url=https://eitaa.com/joinchat/3226862380Ce9a7c97c3d"
@@ -758,7 +1070,6 @@
         </a>
       </div>
 
-      <!-- فوتر شامل محرمانگی و اعتبار -->
       <div class="footer">
         <p class="credit" dir="rtl">
           طراحی و توسعه یافته توسط|webtci| <br /><a
@@ -890,6 +1201,30 @@
           checkbox.addEventListener("change", updateSelectedCount);
         });
       // ====
+
+      document.addEventListener("DOMContentLoaded", function () {
+        const form1 = document.getElementById("form1");
+        const form2 = document.getElementById("form2");
+
+        const request = document.getElementById("request");
+        const register = document.getElementById("register");
+
+        function updateUI() {
+          if (request.checked) {
+            form1.classList.remove("hidden");
+            form2.classList.add("hidden");
+          } else if (register.checked) {
+            form2.classList.remove("hidden");
+            form1.classList.add("hidden");
+          }
+        }
+
+        request.addEventListener("change", updateUI);
+        register.addEventListener("change", updateUI);
+
+        // هماهنگ کردن دیفالت هنگام لود
+        updateUI();
+      });
     </script>
   </body>
 </html>
